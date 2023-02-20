@@ -1,0 +1,85 @@
+@media (min-width: 992px) {
+    .navbar-brand img {
+        width: 235px!important;
+        height: 118px!important;
+    }
+}
+
+.navbar-brand img {
+    width: 120px;
+    height: 60px;
+}
+
+#footer-links a.btn {
+    padding: 0;
+    color: white;
+}
+
+#footer {
+    background: url(../../frontend/img/img-1.png) center / cover no-repeat;
+}
+
+#footer img {
+    width: 245px;
+    height: auto;
+}
+
+#social-icons img {
+    width: 30px;
+    height: 30px;
+}
+
+#copyright p {
+    color: rgb(135, 135, 135);
+}
+
+#newsletter > .wrapper {
+    max-width: 686px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 1200px) {
+    #newsletter form {
+        transform: translateY(50%);
+        box-shadow: 0px 15px 166px 0px rgba(0, 0, 0, 0.29);
+    }
+}
+
+#newsletter {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+#quantity {
+    background-color: transparent;
+    border-color: rgba(0,0,0,0.2)!important;
+}
+
+@media (max-width: 991.98px) {
+    .dropdown-search {
+        position: static!important;
+    }
+}
+
+.mode.active {
+    color: #69bc9f!important;
+}
+
+.mode {
+    cursor: pointer;
+}
+
+#navcol-2 .fa-stack {
+    font-size: 0.85rem;
+    color: #69bc9f;
+}
+
+#social-icons .fa-stack {
+    font-size: 1.25rem;
+    color: white;
+}
+
+#social-icons .fa-stack .fa-inverse {
+    color: dimgray;
+}
