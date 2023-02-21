@@ -22,10 +22,10 @@
                             <li><a href="#"> Create Service</a></li>
                         </ul>
                     </li> --}}
-                    @can('user-list')
-                    <li id="user">
-                        <a href="{{route('users-list')}}" aria-expanded="true"><i
-                                class="bi bi-people"></i><span>Users</span></a>
+                    @can('time-setups-list')
+                    <li id="timesetup">
+                        <a href="{{ route('time-setups-list') }}" aria-expanded="true"><i
+                                class="bi bi-clock"></i><span>Time Setup</span></a>
                     </li>
                     @endcan
                     {{-- <li>
@@ -36,14 +36,17 @@
                             <li><a href="#">Subscriber </a></li>
                         </ul>
                     </li> --}}
-                    @if(auth()->user()->can('admin-list') || auth()->user()->can('role-list'))
+                    @if(auth()->user()->can('admin-list') || auth()->user()->can('role-list') || auth()->user()->can('user-list'))
                     <li>
                         <a href="#" data-bs-toggle="collapse" data-bs-target="#admins" aria-controls="admins"
                            aria-expanded="true"><i class="bi bi-file-lock"></i><span>Admins</span>
                         </a>
-                        <ul class="collapse {{ (Request::segment(2)=='hr')?"show":"" }}" id="admins">
+                        <ul class="collapse {{ (Request::segment(2)=='admin')?"show":"" }}" id="admins">
                             @can('admin-list')
-                            <li><a href="{{ route('admins.index') }}">Admins</a></li>
+                            <li><a href="{{ route('admins.index') }}">Admin Users</a></li>
+                            @endcan
+                            @can('user-list')
+                            <li><a href="{{route('users-list')}}">Users</a></li>
                             @endcan
                             @can('role-list')
                             <li><a href="{{ route('roles.index') }}">Roles</a></li>

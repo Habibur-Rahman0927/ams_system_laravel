@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\backend\AdminUserController;
 use App\Http\Controllers\backend\role\RoleController;
+use App\Http\Controllers\backend\timeSetup\TimeSetupController;
 use App\Http\Controllers\backend\users\UserController;
 use App\Http\Controllers\frontend\LoginUserController;
 use App\Http\Controllers\ProfileController;
@@ -58,6 +59,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/users/update/{id}', [UserController::class, 'edit'])->name('users-edit');
         Route::post('/users/update/{id}', [UserController::class, 'update'])->name('users-update');
         Route::get('/users/update-service/{service_id}', [UserController::class, 'editUserService'])->name('user-service-update');
+
+        /**
+         * TimeSetup
+         */
+        Route::get('/time-setups', [TimeSetupController::class, 'index'])->name('time-setups-list');
+        Route::get('/time-setups/create', [TimeSetupController::class, 'create'])->name('time-setups-create');
+        Route::post('/time-setups/create', [TimeSetupController::class, 'store'])->name('time-setups-submit');
+        Route::get('/time-setups/delete/{id}', [TimeSetupController::class, 'destroy'])->name('time-setups-delete');
+
+        Route::get('/time-setups/update/{id}', [TimeSetupController::class, 'edit'])->name('time-setups-edit');
+        Route::post('/time-setups/update/{id}', [TimeSetupController::class, 'update'])->name('time-setups-update');
+        // Route::get('/users/update-service/{service_id}', [TimeSetupController::class, 'editUserService'])->name('user-service-update');
         
     });
     /**
