@@ -16,33 +16,29 @@
                     </div>
                 @endif
                 <div class="user-data-setting shadow ">
-                    <form class="row g-3 adduserform" action="{{URL::to('admin/time-setups/update/'.$time_setup->id)}}"
+                    <form class="row g-3 adduserform" action="{{URL::to('admin/course/update/'.$course->id)}}"
                           method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="col-md-6">
-                            @php 
-                                use Illuminate\Support\Carbon;
-                                $start_time = new Carbon($time_setup->start_time);
-                                $end_time = new Carbon($time_setup->end_time);
-                            @endphp
-                            <strong>Start Time:</strong>
-                            <input type="time"
-                                   class="form-control shadow-none @error('start_time') is-invalid @enderror"
-                                   name="start_time" id="start_time" value="{{$start_time->format('h:i')}}"
-                                   placeholder="Start Time">
-                            @error('start_time')
+                            <strong>Course Name:</strong>
+                            <input type="text"
+                                   class="form-control shadow-none @error('course_name') is-invalid @enderror"
+                                   name="course_name" id="course_name" value="{{$course->course_name}}"
+                                   placeholder="Course Name">
+                            @error('course_name')
                             <div class="alert"><p class="text-danger">{{ $message }}</p></div>
                             @enderror
                         </div>
                         <div class="col-md-6">
-                            <strong>End Time:</strong>
-                            <input type="time" class="form-control shadow-none @error('end_time') is-invalid @enderror"
-                                   name="end_time" id="end_time" value="{{$end_time->format('h:i')}}"
-                                   placeholder="End Time">
-
-                            @error('end_time')
-                            <div class="alert"><p class="text-danger">{{ $message }}</p></div>
-                            @enderror
+                            <strong>Duration:</strong>
+                            <select class="form-control" name="time_setup_id">
+                                <option value=""> -- Select Time -- </option>
+                                @foreach ($time_setups as $time_setup)
+                                    <option value="{{$time_setup->id}}"
+                                        {{ $course->time_setup_id == $time_setup->id ? 'selected' : '' }}
+                                        >{{$time_setup->start_time}} - {{$time_setup->end_time}}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class=" text-center user-data-btn">
