@@ -38,17 +38,20 @@
                             @enderror
                         </div>
                         
-                        
-                        
-                        
-                        
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <input type="email" class="form-control shadow-none @error('email') is-invalid @enderror"
                                    name="email" id="inputEmail4"
                                    placeholder="Email" value="{{$user->email}}">
                             @error('email')
                             <div class="alert"><p class="text-danger">{{ $message }}</p></div>
                             @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <select class="form-control" name="user_role">
+                                    <option value=""> -- Select User Role -- </option>
+                                    <option value="user" {{$user->role === 'user' ? 'selected': ''}}>User</option>
+                                    <option value="student" {{$user->role === 'student' ? 'selected': ''}}>Student</option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <input type="password"

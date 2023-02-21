@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\backend\AdminUserController;
+use App\Http\Controllers\backend\assign\AssignController;
 use App\Http\Controllers\backend\role\RoleController;
 use App\Http\Controllers\backend\course\CourseController;
 use App\Http\Controllers\backend\timeSetup\TimeSetupController;
@@ -26,9 +27,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::middleware(['auth:admin'])->group(function () {
@@ -72,8 +73,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/time-setups/update/{id}', [TimeSetupController::class, 'edit'])->name('time-setups-edit');
         Route::post('/time-setups/update/{id}', [TimeSetupController::class, 'update'])->name('time-setups-update');
         // Route::get('/users/update-service/{service_id}', [TimeSetupController::class, 'editUserService'])->name('user-service-update');
+        
         /**
-         * TimeSetup
+         * course
          */
         Route::get('/course', [CourseController::class, 'index'])->name('course-list');
         Route::get('/course/create', [CourseController::class, 'create'])->name('course-create');
@@ -82,6 +84,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
         Route::get('/course/update/{id}', [CourseController::class, 'edit'])->name('course-edit');
         Route::post('/course/update/{id}', [CourseController::class, 'update'])->name('course-update');
+        // Route::get('/users/update-service/{service_id}', [TimeSetupController::class, 'editUserService'])->name('user-service-update');
+
+        /**
+         * assign
+         */
+        Route::get('/assign', [AssignController::class, 'index'])->name('assign-list');
+        Route::get('/assign/create', [AssignController::class, 'create'])->name('assign-create');
+        Route::post('/assign/create', [AssignController::class, 'store'])->name('assign-submit');
+        Route::get('/assign/delete/{id}', [AssignController::class, 'destroy'])->name('assign-delete');
+
+        Route::get('/assign/update/{id}', [AssignController::class, 'edit'])->name('assign-edit');
+        Route::post('/assign/update/{id}', [AssignController::class, 'update'])->name('assign-update');
         // Route::get('/users/update-service/{service_id}', [TimeSetupController::class, 'editUserService'])->name('user-service-update');
         
     });

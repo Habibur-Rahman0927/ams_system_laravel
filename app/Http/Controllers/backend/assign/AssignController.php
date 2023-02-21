@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\backend\course;
+namespace App\Http\Controllers\backend\assign;
 
 use App\Http\Controllers\Controller;
+use App\Models\Assign;
 use App\Models\Course;
-use App\Models\TimeSetup;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Response;
 
-class CourseController extends Controller
+class AssignController extends Controller
 {
 
 
@@ -23,10 +24,10 @@ class CourseController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('permission:course-list|course-create|course-edit|course-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:course-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:course-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:course-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:assign-list|assign-create|assign-edit|assign-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:assign-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:assign-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:assign-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -36,12 +37,12 @@ class CourseController extends Controller
     public function index()
     {
         try {
-            $this->data['courses'] = Course::orderBy('id', 'DESC')->paginate(20);
+            $this->data['assigns'] = Assign::orderBy('id', 'DESC')->paginate(20);
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage())->withInput();
         }
 
-        return view("backends.course.index", $this->data);
+        return view("backends.assign.index", $this->data);
     }
 
     /**
@@ -52,11 +53,12 @@ class CourseController extends Controller
     public function create()
     {
         try {
-            $this->data['time_setups'] = TimeSetup::orderBy('id', 'DESC')->get();
+            $this->data['courses'] = Course::orderBy('id', 'DESC')->get();
+            $this->data['users'] = User::where('role', 'student')->orderBy('id', 'DESC')->get();
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage())->withInput();
         }
-        return view("backends.course.create", $this->data);
+        return view("backends.assign.create", $this->data);
     }
 
     /**
@@ -68,14 +70,14 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         try {
-            $courseObject = new Course();
+            $assingObject = new Assign();
 
-            $courseObject->course_name = $request['course_name'];
-            $courseObject->time_setup_id = $request['time_setup_id'];
-            $courseObject->created_by = Auth::user()->id;
+            $assingObject->course_id = $request['course_id'];
+            $assingObject->user_id = $request['student_id'];
+            $assingObject->created_by = Auth::user()->id;
 
-            if ($courseObject->save()) {
-                return redirect(route('course-list'))->with('redirect-message', 'Course successfully added!');
+            if ($assingObject->save()) {
+                return redirect(route('assign-list'))->with('redirect-message', 'Course Assign successfully added!');
             } else {
                 return redirect()->back()->with('redirect-message', 'Something wrong!');
             }
@@ -104,12 +106,13 @@ class CourseController extends Controller
     public function edit($id)
     {
         try {
-            $this->data['course'] = Course::find($id);
-            $this->data['time_setups'] = TimeSetup::orderBy('id', 'DESC')->get();
+            $this->data['assigns'] = Assign::find($id);
+            $this->data['courses'] = Course::orderBy('id', 'DESC')->get();
+            $this->data['users'] = User::where('role', 'student')->orderBy('id', 'DESC')->get();
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage())->withInput();
         }
-        return view("backends.course.edit", $this->data);
+        return view("backends.assign.edit", $this->data);
     }
 
     /**
@@ -122,13 +125,13 @@ class CourseController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $courseObject = Course::where('id', $id)->first();
+            $assingObject = Assign::where('id', $id)->first();
 
-            $courseObject->course_name = $request['course_name'];
-            $courseObject->time_setup_id = $request['time_setup_id'];
+            $assingObject->course_id = $request['course_id'];
+            $assingObject->user_id = $request['student_id'];
             
-            if ($courseObject->save()) {
-                return redirect(route('course-list'))->with('redirect-message', 'Course successfully updated!');
+            if ($assingObject->save()) {
+                return redirect(route('assign-list'))->with('redirect-message', 'Course Assign successfully updated!');
             } else {
                 return redirect()->back()->with('redirect-message', 'Something wrong!');
             }
@@ -145,8 +148,8 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        Course::find($id)->delete();
-        return redirect()->route('course-list')
-                        ->with('success','Course deleted successfully');
+        Assign::find($id)->delete();
+        return redirect()->route('assign-list')
+                        ->with('success','Course Assign deleted successfully');
     }
 }

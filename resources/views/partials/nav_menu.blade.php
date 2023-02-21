@@ -29,9 +29,15 @@
                     </li>
                     @endcan
                     @can('course-list')
-                    <li id="timesetup">
+                    <li id="course">
                         <a href="{{ route('course-list') }}" aria-expanded="true"><i
                                 class="bi bi-book"></i><span>Course</span></a>
+                    </li>
+                    @endcan
+                    @can('assign-list')
+                    <li id="assign">
+                        <a href="{{ route('assign-list') }}" aria-expanded="true"><i
+                                class="bi bi-arrow-left-right"></i><span>Assign</span></a>
                     </li>
                     @endcan
                     {{-- <li>

@@ -45,7 +45,7 @@
                                                 <tr>
                                                     <td scope="row">{{ @$course->id }}</td>
                                                     <td scope="row">{{ @$course->course_name }}</td>
-                                                    <td scope="row">{{ @$course->timeSetup->start_time }} - {{ @$course->timeSetup->start_time }}</td>
+                                                    <td scope="row">{{ @$course->timeSetup->start_time }} - {{ @$course->timeSetup->end_time }}</td>
                                                     <td scope="row">
                                                         <label class="switch">
                                                             <input type="checkbox" {{ $course->status == true ? 'checked' : '' }}

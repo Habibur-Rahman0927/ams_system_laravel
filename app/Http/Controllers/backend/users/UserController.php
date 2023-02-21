@@ -33,7 +33,7 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $this->data['users'] = User::where('role', 'user')->orderBy('id', 'DESC')->paginate(20);
+            $this->data['users'] = User::where('role', 'user')->orWhere('role', 'student')->orderBy('id', 'DESC')->paginate(20);
             // dd($this->data['users']);
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage())->withInput();
@@ -69,6 +69,7 @@ class UserController extends Controller
             $userObject->email = $request['email'];
             $userObject->password = Hash::make($request['password']);
             $userObject->email = $request['email'];
+            $userObject->role = $request['user_role'];
 
             if ($userObject->save()) {
                 return redirect(route('users-list'))->with('redirect-message', 'User successfully added!');
@@ -119,6 +120,7 @@ class UserController extends Controller
             $userObject->first_name = $request['first_name'];
             $userObject->last_name = $request['last_name'];
             $userObject->email = $request['email'];
+            $userObject->role = $request['user_role'];
             if ($request['password']) {
                 $userObject->password = Hash::make($request['password']);
             }
