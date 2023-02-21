@@ -28,6 +28,12 @@
                                 class="bi bi-clock"></i><span>Time Setup</span></a>
                     </li>
                     @endcan
+                    @can('course-list')
+                    <li id="timesetup">
+                        <a href="{{ route('course-list') }}" aria-expanded="true"><i
+                                class="bi bi-book"></i><span>Course</span></a>
+                    </li>
+                    @endcan
                     {{-- <li>
                         <a href="#" data-bs-toggle="collapse show" data-bs-target="#Orders"
                            aria-controls="Orders" aria-expanded="true"><i class="bi bi-cart"></i><span>Orders </span>

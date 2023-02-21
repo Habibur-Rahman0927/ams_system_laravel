@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\backend\timeSetup;
+namespace App\Http\Controllers\backend\course;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\TimeSetup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Response;
 
-class TimeSetupController extends Controller
+class CourseController extends Controller
 {
 
 
@@ -22,10 +23,10 @@ class TimeSetupController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('permission:time-setups-list|time-setups-create|time-setups-edit|time-setups-delete', ['only' => ['index', 'store']]);
-        $this->middleware('permission:time-setups-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:time-setups-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:time-setups-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:course-list|course-create|course-edit|course-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:course-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:course-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:course-delete', ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -35,13 +36,12 @@ class TimeSetupController extends Controller
     public function index()
     {
         try {
-            $this->data['time_setups'] = TimeSetup::orderBy('id', 'DESC')->paginate(20);
-            // dd($this->data['users']);
+            $this->data['courses'] = Course::orderBy('id', 'DESC')->paginate(20);
         } catch (\Exception $exception) {
             return back()->withError($exception->getMessage())->withInput();
         }
 
-        return view("backends.timeSetup.index", $this->data);
+        return view("backends.course.index", $this->data);
     }
 
     /**
@@ -51,7 +51,12 @@ class TimeSetupController extends Controller
      */
     public function create()
     {
-        return view("backends.timeSetup.create", $this->data);
+        try {
+            $this->data['time_setups'] = TimeSetup::orderBy('id', 'DESC')->get();
+        } catch (\Exception $exception) {
+            return back()->withError($exception->getMessage())->withInput();
+        }
+        return view("backends.course.create", $this->data);
     }
 
     /**
@@ -63,18 +68,14 @@ class TimeSetupController extends Controller
     public function store(Request $request)
     {
         try {
-            $start_time = new Carbon($request['start_time']);
-            $end_time = new Carbon($request['end_time']);
+            $courseObject = new Course();
 
+            $courseObject->course_name = $request['course_name'];
+            $courseObject->time_setup_id = $request['time_setup_id'];
+            $courseObject->created_by = Auth::user()->id;
 
-            $timeSetupObject = new TimeSetup();
-
-            $timeSetupObject->start_time = $start_time->format('h:i A');
-            $timeSetupObject->end_time = $end_time->format('h:i A');
-            $timeSetupObject->created_by = Auth::user()->id;
-
-            if ($timeSetupObject->save()) {
-                return redirect(route('time-setups-list'))->with('redirect-message', 'Time successfully added!');
+            if ($courseObject->save()) {
+                return redirect(route('course-list'))->with('redirect-message', 'Course successfully added!');
             } else {
                 return redirect()->back()->with('redirect-message', 'Something wrong!');
             }
@@ -102,8 +103,13 @@ class TimeSetupController extends Controller
      */
     public function edit($id)
     {
-        $this->data['time_setup'] = TimeSetup::find($id);
-        return view("backends.timeSetup.edit", $this->data);
+        try {
+            $this->data['course'] = Course::find($id);
+            $this->data['time_setups'] = TimeSetup::orderBy('id', 'DESC')->get();
+        } catch (\Exception $exception) {
+            return back()->withError($exception->getMessage())->withInput();
+        }
+        return view("backends.course.edit", $this->data);
     }
 
     /**
@@ -116,17 +122,13 @@ class TimeSetupController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $start_time = new Carbon($request['start_time']);
-            $end_time = new Carbon($request['end_time']);
-            
-            $timeSetupObject = TimeSetup::where('id', $id)->first();
+            $courseObject = Course::where('id', $id)->first();
 
-            $timeSetupObject->start_time = $start_time->format('h:i A');
-            $timeSetupObject->end_time = $end_time->format('h:i A');
+            $courseObject->course_name = $request['course_name'];
+            $courseObject->time_setup_id = $request['time_setup_id'];
             
-
-            if ($timeSetupObject->save()) {
-                return redirect(route('time-setups-list'))->with('redirect-message', 'Time successfully updated!');
+            if ($courseObject->save()) {
+                return redirect(route('course-list'))->with('redirect-message', 'Clurse successfully updated!');
             } else {
                 return redirect()->back()->with('redirect-message', 'Something wrong!');
             }
@@ -143,8 +145,8 @@ class TimeSetupController extends Controller
      */
     public function destroy($id)
     {
-        TimeSetup::find($id)->delete();
-        return redirect()->route('time-setups-list')
-                        ->with('success','Time deleted successfully');
+        Course::find($id)->delete();
+        return redirect()->route('course-list')
+                        ->with('success','Course deleted successfully');
     }
 }
