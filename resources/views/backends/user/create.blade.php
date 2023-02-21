@@ -36,12 +36,19 @@
                             <div class="alert"><p class="text-danger">{{ $message }}</p></div>
                             @enderror
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <input type="email" class="form-control shadow-none @error('email') is-invalid @enderror" name="email" id="inputEmail4"
                                    placeholder="Email" value="{{old('email')}}">
                             @error('email')
                             <div class="alert"><p class="text-danger">{{ $message }}</p></div>
                             @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <select class="form-control" name="user_role">
+                                    <option value=""> -- Select User Role -- </option>
+                                    <option value="user">User</option>
+                                    <option value="student">Student</option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <input type="password" class="form-control shadow-none @error('password') is-invalid @enderror" name="password" id="inputPassword"

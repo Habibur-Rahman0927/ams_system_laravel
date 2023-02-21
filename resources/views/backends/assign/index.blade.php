@@ -3,7 +3,7 @@
     <div class="main-content-inner pt-4">
         <div class="row pb-3 pt-3">
             <div class="col-md-2 col-sm-2">
-                <h4 style="margin-bottom: 0;">Users</h4>
+                <h4 style="margin-bottom: 0;">Course Assign</h4>
             </div>
             <div class="col-md-10 col-sm-10"></div>
         </div>
@@ -19,11 +19,11 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    @can('user-create')
+                                    @can('assign-create')
                                     <div class="table-left">
-                                        <a href="{{ route('users-create') }}" class="add-user"> <span><i
+                                        <a href="{{ route('assign-create') }}" class="add-user"> <span><i
                                                     class="bi bi-person-plus"></i></span> Add
-                                            User</a>
+                                                    Course Assign</a>
                                     </div>
                                     @endcan
                                 </div>
@@ -33,40 +33,38 @@
                                     <table class="table">
                                         <thead class="text-uppercase">
                                             <tr>
-                                                <th class="text-nowrap" scope="col">User ID</th>
-                                                <th class="text-nowrap" scope="col">First Name</th>
-                                                <th class="text-nowrap" scope="col">Last Name</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">User Role</th>
-                                                <th scope="col">Services</th>
+                                                <th class="text-nowrap" scope="col">ID</th>
+                                                <th class="text-nowrap" scope="col">Course Name</th>
+                                                <th class="text-nowrap" scope="col">Duration</th>
+                                                <th class="text-nowrap" scope="col">Student Name</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Active</th>
                                             </tr>
                                         </thead>
                                         <tbody class="user-data">
-                                            @foreach ($users as $user)
+                                            @foreach ($assigns as $assign)
                                                 <tr>
-                                                    <td scope="row">{{ @$user->id }}</td>
-                                                    <td scope="row">{{ @$user->first_name }}</td>
-                                                    <td scope="row">{{ @$user->last_name }}</td>
-                                                    <td scope="row">{{ @$user->email }}</td>
-                                                    <td scope="row"><span class="badge bg-secondary">{{ @$user->role }}</span></td>
+                                                    <td scope="row">{{ @$assign->id }}</td>
+                                                    <td scope="row">{{ @$assign->course->course_name }}</td>
+                                                    <td scope="row">{{ @$assign->course->timeSetup->start_time }} - {{ @$assign->course->timeSetup->start_time }}</td>
+                                                    <td scope="row">{{ @$assign->user->first_name }} - {{ @$assign->user->last_name }}</td>
                                                     <td scope="row">
                                                         <label class="switch">
-                                                            <input type="checkbox" {{ $user->status == true ? 'checked' : '' }}
-                                                                data-id="{{ $user->id }}" class="toggle-class">
+                                                            <input type="checkbox" {{ $assign->status == true ? 'checked' : '' }}
+                                                                data-id="{{ $assign->id }}" class="toggle-class">
                                                             <span class="slider round"></span>
                                                         </label>
                                                     </td>
                                                     <td>
                                                         <div class="add-userTable-btn">
-                                                            @can('user-edit')
-                                                            <a href="{{ URL::to('admin/users/update/' . $user->id) }}"
+                                                            @can('assign-edit')
+                                                            <a href="{{ URL::to('admin/assign/update/' . $assign->id) }}"
                                                                 class="edit-btn"><i <a
-                                                                    href="{{ route('users-edit', $user->id) }}"
+                                                                    href="{{ route('assign-edit', $assign->id) }}"
                                                                     class="edit-btn"><i class="bi bi-pencil-square"></i></a>
-                                                            @endcan
-                                                            @can('user-delete')
-                                                            <a href="{{ route('users-delete', ['id' => $user->id]) }}"
+                                                            @endcan        
+                                                            @can('assign-delete')
+                                                            <a href="{{ route('assign-delete', ['id' => $assign->id]) }}"
                                                                 class="del-btn"><i class="bi bi-trash"></i></a>
                                                             @endcan
                                                         </div>
@@ -80,7 +78,7 @@
                             </div>
                             <div class="col-md-8 col-sm-8 pull-right">
                                 <ul class="pagination pull-right">
-                                    {{ $users->links() }}
+                                    {{ $assigns->links() }}
                                 </ul>
                             </div>
                         </div>
