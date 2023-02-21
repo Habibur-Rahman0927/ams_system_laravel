@@ -186,6 +186,7 @@ return [
          * Package Service Providers...
          */
         Collective\Html\HtmlServiceProvider::class,
+        Stevebauman\Location\LocationServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -212,6 +213,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Location' => Stevebauman\Location\Facades\Location::class,
     ])->toArray(),
 
 ];

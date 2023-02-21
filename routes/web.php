@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\backend\AdminUserController;
 use App\Http\Controllers\backend\assign\AssignController;
+use App\Http\Controllers\backend\checkIn\CheckInController;
 use App\Http\Controllers\backend\role\RoleController;
 use App\Http\Controllers\backend\course\CourseController;
 use App\Http\Controllers\backend\timeSetup\TimeSetupController;
@@ -96,6 +97,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
         Route::get('/assign/update/{id}', [AssignController::class, 'edit'])->name('assign-edit');
         Route::post('/assign/update/{id}', [AssignController::class, 'update'])->name('assign-update');
+        // Route::get('/users/update-service/{service_id}', [TimeSetupController::class, 'editUserService'])->name('user-service-update');
+
+        /**
+         * student checking
+         */
+        Route::get('/check-in', [CheckInController::class, 'index'])->name('check-in-list');
+        Route::get('/check-in/create', [CheckInController::class, 'create'])->name('check-in-create');
+        Route::post('/check-in/create', [CheckInController::class, 'store'])->name('check-in-submit');
+        Route::get('/check-in/delete/{id}', [CheckInController::class, 'destroy'])->name('check-in-delete');
+
+        Route::get('/check-in/update/{id}', [CheckInController::class, 'edit'])->name('check-in-edit');
+        Route::post('/check-in/update/{id}', [CheckInController::class, 'update'])->name('check-in-update');
         // Route::get('/users/update-service/{service_id}', [TimeSetupController::class, 'editUserService'])->name('user-service-update');
         
     });
