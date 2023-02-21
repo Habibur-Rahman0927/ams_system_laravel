@@ -3,7 +3,7 @@
     <div class="main-content-inner pt-4">
         <div class="row pb-3 pt-3">
             <div class="col-md-2 col-sm-2">
-                <h4 style="margin-bottom: 0;">Users</h4>
+                <h4 style="margin-bottom: 0;">Time Setup</h4>
             </div>
             <div class="col-md-10 col-sm-10"></div>
         </div>
@@ -19,11 +19,11 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
-                                    @can('user-create')
+                                    @can('time-setups-create')
                                     <div class="table-left">
-                                        <a href="{{ route('users-create') }}" class="add-user"> <span><i
+                                        <a href="{{ route('time-setups-create') }}" class="add-user"> <span><i
                                                     class="bi bi-person-plus"></i></span> Add
-                                            User</a>
+                                            Time</a>
                                     </div>
                                     @endcan
                                 </div>
@@ -33,38 +33,36 @@
                                     <table class="table">
                                         <thead class="text-uppercase">
                                             <tr>
-                                                <th class="text-nowrap" scope="col">User ID</th>
-                                                <th class="text-nowrap" scope="col">First Name</th>
-                                                <th class="text-nowrap" scope="col">Last Name</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Services</th>
+                                                <th class="text-nowrap" scope="col">ID</th>
+                                                <th class="text-nowrap" scope="col">Start Time</th>
+                                                <th class="text-nowrap" scope="col">End Time</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Active</th>
                                             </tr>
                                         </thead>
                                         <tbody class="user-data">
-                                            @foreach ($users as $user)
+                                            @foreach ($time_setups as $time_setup)
                                                 <tr>
-                                                    <td scope="row">{{ @$user->id }}</td>
-                                                    <td scope="row">{{ @$user->first_name }}</td>
-                                                    <td scope="row">{{ @$user->last_name }}</td>
-                                                    <td scope="row">{{ @$user->email }}</td>
+                                                    <td scope="row">{{ @$time_setup->id }}</td>
+                                                    <td scope="row">{{ @$time_setup->start_time }}</td>
+                                                    <td scope="row">{{ @$time_setup->end_time }}</td>
                                                     <td scope="row">
                                                         <label class="switch">
-                                                            <input type="checkbox" {{ $user->status == true ? 'checked' : '' }}
-                                                                data-id="{{ $user->id }}" class="toggle-class">
+                                                            <input type="checkbox" {{ $time_setup->status == true ? 'checked' : '' }}
+                                                                data-id="{{ $time_setup->id }}" class="toggle-class">
                                                             <span class="slider round"></span>
                                                         </label>
                                                     </td>
                                                     <td>
                                                         <div class="add-userTable-btn">
-                                                            @can('user-edit')
-                                                            <a href="{{ URL::to('admin/users/update/' . $user->id) }}"
+                                                            @can('time-setups-edit')
+                                                            <a href="{{ URL::to('admin/time-setups/update/' . $time_setup->id) }}"
                                                                 class="edit-btn"><i <a
-                                                                    href="{{ route('users-edit', $user->id) }}"
+                                                                    href="{{ route('time-setups-edit', $time_setup->id) }}"
                                                                     class="edit-btn"><i class="bi bi-pencil-square"></i></a>
-                                                            @endcan
-                                                            @can('user-delete')
-                                                            <a href="{{ route('users-delete', ['id' => $user->id]) }}"
+                                                            @endcan        
+                                                            @can('time-setups-delete')
+                                                            <a href="{{ route('time-setups-delete', ['id' => $time_setup->id]) }}"
                                                                 class="del-btn"><i class="bi bi-trash"></i></a>
                                                             @endcan
                                                         </div>
@@ -78,7 +76,7 @@
                             </div>
                             <div class="col-md-8 col-sm-8 pull-right">
                                 <ul class="pagination pull-right">
-                                    {{ $users->links() }}
+                                    {{ $time_setups->links() }}
                                 </ul>
                             </div>
                         </div>
