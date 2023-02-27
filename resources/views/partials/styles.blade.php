@@ -9,3 +9,4 @@
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/style.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/responsive.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/toastr.min.css') }}" />

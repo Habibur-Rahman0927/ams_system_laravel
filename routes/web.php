@@ -58,7 +58,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/users/create', [UserController::class, 'create'])->name('users-create');
         Route::post('/users/create', [UserController::class, 'store'])->name('users-submit');
         Route::get('/users/delete/{id}', [UserController::class, 'destroy'])->name('users-delete');
-
+        Route::post('/users/status', [UserController::class, 'updateStatus'])->name('users-status');
         Route::get('/users/update/{id}', [UserController::class, 'edit'])->name('users-edit');
         Route::post('/users/update/{id}', [UserController::class, 'update'])->name('users-update');
         Route::get('/users/update-service/{service_id}', [UserController::class, 'editUserService'])->name('user-service-update');

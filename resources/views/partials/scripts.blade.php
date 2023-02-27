@@ -4,6 +4,8 @@
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script src="{{ asset('assets/dashboard/js/app.js') }}"></script>
 <script src="{{ asset('assets/dashboard/js/script.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/bootbox.min.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/toastr.min.js') }}"></script>
 
 <script>
     // Membership Reports Chart

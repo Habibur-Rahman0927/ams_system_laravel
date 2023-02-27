@@ -90,13 +90,36 @@
         </div>
 
     </div>
-    @push('css-styles')
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    @endpush
 @section('scripts')
-    @parent
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
-    <script></script>
+    <script>
+        $(function () {
+            $('.toggle-class').change(function () {
+                var status = $(this).prop('checked') == true ? 1 : 0;
+                var user_id = $(this).data('id');
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "POST",
+                    dataType: "json",
+                    url: '/admin/users/status/',
+                    data: {'status': status, 'id': user_id},
+                    success: function (data) {
+                        console.log(data.success)
+                        if (data.status == true) {
+                            toastr.success(data.message);
+                        } else {
+                            toastr.error(data.message);
+                        }
+                    },
+                    error: function (err) {
+                        toastr.error(data.message);
+                    }
+                });
+            });
+
+        });
+    </script>
 @endsection
 @endsection
