@@ -70,7 +70,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/time-setups/create', [TimeSetupController::class, 'create'])->name('time-setups-create');
         Route::post('/time-setups/create', [TimeSetupController::class, 'store'])->name('time-setups-submit');
         Route::get('/time-setups/delete/{id}', [TimeSetupController::class, 'destroy'])->name('time-setups-delete');
-
+        Route::post('/time-setup/status', [TimeSetupController::class, 'updateTimeStatus'])->name('time-setup-status');
         Route::get('/time-setups/update/{id}', [TimeSetupController::class, 'edit'])->name('time-setups-edit');
         Route::post('/time-setups/update/{id}', [TimeSetupController::class, 'update'])->name('time-setups-update');
         // Route::get('/users/update-service/{service_id}', [TimeSetupController::class, 'editUserService'])->name('user-service-update');
@@ -82,7 +82,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/course/create', [CourseController::class, 'create'])->name('course-create');
         Route::post('/course/create', [CourseController::class, 'store'])->name('course-submit');
         Route::get('/course/delete/{id}', [CourseController::class, 'destroy'])->name('course-delete');
-
+        Route::post('/course/status', [CourseController::class, 'updateCourseStatus'])->name('course-status');
         Route::get('/course/update/{id}', [CourseController::class, 'edit'])->name('course-edit');
         Route::post('/course/update/{id}', [CourseController::class, 'update'])->name('course-update');
         // Route::get('/users/update-service/{service_id}', [TimeSetupController::class, 'editUserService'])->name('user-service-update');
@@ -94,7 +94,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/assign/create', [AssignController::class, 'create'])->name('assign-create');
         Route::post('/assign/create', [AssignController::class, 'store'])->name('assign-submit');
         Route::get('/assign/delete/{id}', [AssignController::class, 'destroy'])->name('assign-delete');
-
+        Route::post('/assign/status', [AssignController::class, 'updateAssignStatus'])->name('assign-status');
         Route::get('/assign/update/{id}', [AssignController::class, 'edit'])->name('assign-edit');
         Route::post('/assign/update/{id}', [AssignController::class, 'update'])->name('assign-update');
         // Route::get('/users/update-service/{service_id}', [TimeSetupController::class, 'editUserService'])->name('user-service-update');
@@ -106,7 +106,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/check-in/create', [CheckInController::class, 'create'])->name('check-in-create');
         Route::post('/check-in/create', [CheckInController::class, 'store'])->name('check-in-submit');
         Route::get('/check-in/delete/{id}', [CheckInController::class, 'destroy'])->name('check-in-delete');
-
+        Route::post('/checkInOut/status', [CheckInController::class, 'updateCheckInOutStatus'])->name('checkInOut-status');
         Route::get('/check-in/update/{id}', [CheckInController::class, 'edit'])->name('check-in-edit');
         Route::post('/check-in/update/{id}', [CheckInController::class, 'update'])->name('check-in-update');
         // Route::get('/users/update-service/{service_id}', [TimeSetupController::class, 'editUserService'])->name('user-service-update');
@@ -119,6 +119,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::resource('roles', RoleController::class);
         Route::resource('admins', AdminUserController::class);
+        Route::post('/admin/status', [AdminUserController::class, 'updateAdminStatus'])->name('admin-status');
     });
 });
 

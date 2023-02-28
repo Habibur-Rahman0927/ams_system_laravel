@@ -136,6 +136,34 @@ class CourseController extends Controller
             echo $exception->getMessage();
         }
     }
+     /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateCourseStatus(Request $request)
+    {
+        try {
+            if ($request->ajax()) {
+                $this->data['courses'] = Course::where('id', $request->id)->update(['status' => $request->status]);
+            }
+        } catch (\Exception $exception) {
+            return Response::json(array(
+                'status' => false,
+                'data' => [],
+                'message' => 'Something went wrong!'
+            ), 400);
+        }
+
+        return Response::json(array(
+            'status' => true,
+            'data' => [],
+            'message' => 'Status updated successfully!'
+        ), 200);
+    }
+
 
     /**
      * Remove the specified resource from storage.

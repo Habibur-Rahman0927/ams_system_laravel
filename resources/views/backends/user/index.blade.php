@@ -38,7 +38,7 @@
                                                 <th class="text-nowrap" scope="col">Last Name</th>
                                                 <th scope="col">Email</th>
                                                 <th scope="col">User Role</th>
-                                                <th scope="col">Services</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Active</th>
                                             </tr>
                                         </thead>
