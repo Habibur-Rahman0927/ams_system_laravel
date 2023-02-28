@@ -35,6 +35,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Roles</th>
+                        <th>Status</th>
                         <th width="280px">Action</th>
                     </tr>
                     </thead>
@@ -50,6 +51,13 @@
                                         <span class="badge bg-secondary">{{ $v }}</span>
                                     @endforeach
                                 @endif
+                            </td>
+                            <td scope="row">
+                                <label class="switch">
+                                    <input type="checkbox" {{ $user->status == true ? 'checked' : '' }}
+                                        data-id="{{ $user->id }}" class="toggle-class">
+                                    <span class="slider round"></span>
+                                </label>
                             </td>
                             <td>
                                 <a class="edit-btn" href="{{ route('admins.show',$user->id) }}"> <i
@@ -74,4 +82,36 @@
             </div>
         </div>
     </div>
+    @section('scripts')
+    <script>
+        $(function () {
+            $('.toggle-class').change(function () {
+                var status = $(this).prop('checked') == true ? 1 : 0;
+                var user_id = $(this).data('id');
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "POST",
+                    dataType: "json",
+                    url: '/admin/admin/status/',
+                    data: {'status': status, 'id': user_id},
+                    success: function (data) {
+                        console.log(data.success)
+                        if (data.status == true) {
+                            toastr.success(data.message);
+                        } else {
+                            toastr.error(data.message);
+                        }
+                    },
+                    error: function (err) {
+                        toastr.error(data.message);
+                    }
+                });
+            });
+
+        });
+    </script>
+    @endsection
 @endsection

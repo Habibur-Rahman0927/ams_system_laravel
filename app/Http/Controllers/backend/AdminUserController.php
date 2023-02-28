@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Response;
 
 class AdminUserController extends Controller
 {
+
+    private array $data = [];
 
     /**
      * Display a listing of the resource.
@@ -133,6 +136,34 @@ class AdminUserController extends Controller
         return redirect()->route('admins.index')
                         ->with('success','User updated successfully');
     }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateAdminStatus(Request $request)
+    {
+        try {
+            if ($request->ajax()) {
+                $this->data['checkinouts'] = User::where('id', $request->id)->update(['status' => $request->status]);
+            }
+        } catch (\Exception $exception) {
+            return Response::json(array(
+                'status' => false,
+                'data' => [],
+                'message' => 'Something went wrong!'
+            ), 400);
+        }
+
+        return Response::json(array(
+            'status' => true,
+            'data' => [],
+            'message' => 'Status updated successfully!'
+        ), 200);
+    }
+
 
     /**
      * Remove the specified resource from storage.
