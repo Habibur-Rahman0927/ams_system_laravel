@@ -70,6 +70,7 @@ class UserController extends Controller
             $userObject->password = Hash::make($request['password']);
             $userObject->email = $request['email'];
             $userObject->role = $request['user_role'];
+            $userObject->assignRole($request['user_role']);
 
             if ($userObject->save()) {
                 return redirect(route('users-list'))->with('redirect-message', 'User successfully added!');
@@ -126,6 +127,8 @@ class UserController extends Controller
             }
 
             if ($userObject->save()) {
+                $userObject->roles()->detach();
+                $userObject->assignRole($request['user_role']);
                 return redirect(route('users-list'))->with('redirect-message', 'User successfully updated!');
             } else {
                 return redirect()->back()->with('redirect-message', 'Something wrong!');

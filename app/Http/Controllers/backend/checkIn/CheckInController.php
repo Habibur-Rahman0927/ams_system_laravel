@@ -83,6 +83,7 @@ class CheckInController extends Controller
             $assingObject->check_place_address = $locationData->countryName.' '.$locationData->regionName.' '.$locationData->cityName;
             $assingObject->course_id = $request['course_id'];
             $assingObject->created_by = Auth::user()->id;
+            $assingObject->status = 1;
 
             if ($assingObject->save()) {
                 return redirect(route('check-in-list'))->with('redirect-message', 'Course Assign successfully added!');

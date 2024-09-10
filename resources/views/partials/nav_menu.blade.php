@@ -22,12 +22,7 @@
                             <li><a href="#"> Create Service</a></li>
                         </ul>
                     </li> --}}
-                    @can('check-in-list')
-                    <li id="check">
-                        <a href="{{ route('check-in-list') }}" aria-expanded="true"><i
-                                class="bi bi-clock"></i><span>Checking</span></a>
-                    </li>
-                    @endcan
+                    
                     @can('time-setups-list')
                     <li id="timesetup">
                         <a href="{{ route('time-setups-list') }}" aria-expanded="true"><i
@@ -38,6 +33,12 @@
                     <li id="course">
                         <a href="{{ route('course-list') }}" aria-expanded="true"><i
                                 class="bi bi-book"></i><span>Course</span></a>
+                    </li>
+                    @endcan
+                    @can('check-in-list')
+                    <li id="check">
+                        <a href="{{ route('check-in-list') }}" aria-expanded="true"><i
+                                class="bi bi-clock"></i><span>Checking</span></a>
                     </li>
                     @endcan
                     @can('assign-list')
