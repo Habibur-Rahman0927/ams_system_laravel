@@ -65,6 +65,8 @@
                                                                     href="{{ route('users-edit', $user->id) }}"
                                                                     class="edit-btn"><i class="bi bi-pencil-square"></i></a>
                                                             @endcan
+                                                            <a class="edit-btn" href="{{ route('users-show',$user->id) }}"> <i
+                                                                class="bi bi-eye"></i></a>
                                                             @can('user-delete')
                                                             <a href="{{ route('users-delete', ['id' => $user->id]) }}"
                                                                 class="del-btn"><i class="bi bi-trash"></i></a>

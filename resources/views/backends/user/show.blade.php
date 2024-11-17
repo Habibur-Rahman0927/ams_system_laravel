@@ -5,10 +5,10 @@
     <div class="row pb-3 pt-3">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Admin Profile</h2>
+                <h2>User Profile</h2>
             </div>
             <div class="pull-right user-data-btn">
-                <a class="btn btn-dark" href="{{ route('admins.index') }}"> Back</a>
+                <a class="btn btn-dark" href="{{ route('users-list') }}"> Back</a>
             </div>
         </div>
     </div>

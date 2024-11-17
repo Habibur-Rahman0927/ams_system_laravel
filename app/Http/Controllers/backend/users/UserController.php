@@ -90,7 +90,12 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        // $generator = new \Picqer\Barcode\BarcodeGeneratorPNG();
+        // $image = $generator->getBarcode('081331723987', $generator::TYPE_CODE_128);
+        $generator = new \Picqer\Barcode\BarcodeGeneratorHTML();
+        $barcode = $generator->getBarcode($user->email, $generator::TYPE_CODE_128);
+        return view('backends.user.show',compact('user', 'barcode'));
     }
 
     /**

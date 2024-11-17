@@ -18,10 +18,10 @@
                         {{-- <li>
                             <a href="{{route('frequency')}}"> <i class="bi bi-gear"></i> Settings </a>
                         </li> --}}
-                        {{-- <li>
+                        <li>
                             <a href="{{ route('admins.show',Auth::guard('admin')->user()->id) }}"><i
                                     class="bi bi-person-fill"></i>Profile </a>
-                        </li> --}}
+                        </li>
                         <li>
                             <a href="{{route('admin-logout')}}"> <i class="bi bi-box-arrow-right"></i> Logout </a>
                         </li>

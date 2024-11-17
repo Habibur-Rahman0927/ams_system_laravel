@@ -56,6 +56,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
          */
         Route::get('/users', [UserController::class, 'index'])->name('users-list');
         Route::get('/users/create', [UserController::class, 'create'])->name('users-create');
+        Route::get('/users/{id}', [UserController::class, 'show'])->name('users-show');
         Route::post('/users/create', [UserController::class, 'store'])->name('users-submit');
         Route::get('/users/delete/{id}', [UserController::class, 'destroy'])->name('users-delete');
         Route::post('/users/status', [UserController::class, 'updateStatus'])->name('users-status');
